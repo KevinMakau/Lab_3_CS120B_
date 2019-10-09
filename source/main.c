@@ -19,12 +19,14 @@ int main(void) {
 	DDRC = 0xFF; PORTC = 0x00;
   
 	unsigned char tmpA = 0x00;
+	unsigned char lightA = 0x00;
 	unsigned char tmpC = 0x00;
-	 
+	
 	
     /* Insert your solution below */
     while (1) {
 	tmpA = PINA & 0x0F;
+	lightA = PINA & 0x70;
 	tmpC = 0x00;
 	
 	// Set PC0-5
@@ -49,9 +51,15 @@ int main(void) {
 	}
 
 	//Set LOW FUEL
-	if (tmpA <= 4){
+	if(tmpA <= 4){
 		tmpC = tmpC | 0x40;
 	}
+
+	
+	//Set Seatbelt light
+	if(lightA == 0x30){
+		tmpC = tmpC | 0x80;
+	} 
 
 	PORTC = tmpC;
 		
